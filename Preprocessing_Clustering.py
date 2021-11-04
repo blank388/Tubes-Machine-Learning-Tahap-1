@@ -7,7 +7,7 @@ import seaborn as sb
 #import csv file 
 trainDf = pd.read_csv('kendaraan_train.csv')
 print("dataset sebelum drop")
-# print(trainDf.sample(5))
+print(trainDf.sample(5))
 print("")
 #terlihat dari 5 sample bahwa kolom id tidak diperlukan, sehingga bisa di drop
 trainDf.drop(['id'], axis=1, inplace=True)
@@ -15,7 +15,7 @@ trainDf.drop(['id'], axis=1, inplace=True)
 trainDf.drop(['Tertarik'], axis=1, inplace=True)
 #cek dataset apakah id dan Tertarik sudah terdrop atau belum
 print("dataset setelah drop")
-# print(trainDf.sample(5))
+print(trainDf.sample(5))
 
 #cek apakah ada data yang sama atau duplikasi
 dataDuplikasi = list(trainDf.duplicated())
@@ -29,7 +29,7 @@ print("Total data duplikasi : ", dataDuplikasi.count(True))
 #ubah data categorical dengan angka (categorical encoding)
 #pertama cek data type tiap kolom, jika object maka itu adalah categorical
 print("")
-# print(trainDf.dtypes)
+print(trainDf.dtypes)
 #buat procedure label encoding untuk mengubah data categorical menjadi angka (alternatif ada algoritma One-Hot Encoding)
 def labelEncode(dataFrame):
     dataFrame['Jenis_Kelamin'] = dataFrame['Jenis_Kelamin'].replace(['Wanita','Pria'], [0,1])
@@ -39,7 +39,7 @@ def labelEncode(dataFrame):
 print("")
 labelEncode(trainDf)
 #cek dataset apakah data categorical sudah berganti atau belum
-# print(trainDf.sample(5))
+print(trainDf.sample(5))
 
 #Mengatasi data kosong / missing value
 #pertama cek apakah ada data kosong atau tidak
@@ -111,7 +111,7 @@ plt.subplot(1,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
 
-# plt.show()
+plt.show()
 #jika terdapat outlier maka harus direduksi
 #di sini akan direduksi menggunakan metode interquartile
 #yang direduksi adalah dataset premi karena memiliki outlier yang berlebihan
@@ -137,7 +137,7 @@ plt.subplot(1,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
 
-# plt.show()
+plt.show()
 
 #Normalisasi Data menggunakan Standard Scaler
 #Agar pemrosesan data lebih cepat 
