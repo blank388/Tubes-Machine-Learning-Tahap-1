@@ -91,6 +91,7 @@ plt.title('Umur_Kendaraan')
 plt.show()
 #data kosong pada sim diisi dengan median karena penyebaran datanya condong ke kanan atau left-skewed
 trainDf['SIM'] = trainDf['SIM'].fillna(trainDf['SIM'].median())
+trainDf['Premi'] = trainDf['Premi'].fillna(trainDf['Premi'].median())
 #sisa data nya diisi mean karena berada di range -2 s/d 2 (untuk skewness kolom tertarik diabaikan karena tidak terdapat data kosong)
 trainDf = trainDf.fillna(trainDf.mean())
 #cek kembali apakah data kosong masih ada atau tidak
