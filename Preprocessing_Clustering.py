@@ -1,6 +1,5 @@
 #import library
 import pandas as pd
-# import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler 
 import seaborn as sb
@@ -53,7 +52,7 @@ print("Total data duplikasi : ", len(trainDf)- len(cleanDuplicates))
 #ubah data categorical dengan angka (categorical encoding)
 #pertama cek data type tiap kolom, jika object maka itu adalah categorical
 print("")
-# print(trainDf.dtypes)
+print(trainDf.dtypes)
 #buat procedure label encoding untuk mengubah data categorical menjadi angka (alternatif ada algoritma One-Hot Encoding)
 def labelEncode(dataFrame):
     dataFrame['Jenis_Kelamin'] = dataFrame['Jenis_Kelamin'].replace(['Wanita','Pria'], [0,1])
@@ -134,7 +133,7 @@ plt.subplot(1,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
 
-# plt.show()
+plt.show()
 #jika terdapat outlier maka harus direduksi
 #di sini akan direduksi menggunakan metode interquartile
 #yang direduksi adalah dataset premi karena memiliki outlier yang berlebihan
@@ -160,7 +159,7 @@ plt.subplot(1,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
 
-# plt.show()
+plt.show()
 
 #Normalisasi Data menggunakan Standard Scaler
 #Agar pemrosesan data lebih cepat 
