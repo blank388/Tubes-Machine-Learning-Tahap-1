@@ -66,7 +66,7 @@ print(trainDf.sample(5))
 
 #Mengatasi data kosong / missing value
 #pertama cek apakah ada data kosong atau tidak
-print(trainDf.isnull().sum().sum())
+print("Jumlah Data kosong =",trainDf.isnull().sum().sum())
 #jika ada data kosong maka kita isi dengan mean/median (ditentukan oleh nilai skewness)
 #untuk menentukan kita mengisinya dengan median atau mean perlu dilihat terlebih dahulu bentuk distplot nya
 #jika penyebarannya merata maka bisa menggunakan mean, sendangkan jika tidak merata maka bisa memakai median
@@ -116,22 +116,30 @@ trainDf['Premi'] = trainDf['Premi'].fillna(trainDf['Premi'].median())
 #sisa data nya diisi mean karena berada di range -2 s/d 2 (untuk skewness kolom tertarik diabaikan karena tidak terdapat data kosong)
 trainDf = trainDf.fillna(trainDf.mean())
 #cek kembali apakah data kosong masih ada atau tidak
-print(trainDf.isnull().sum().sum())
+print("Jumlah Data kosong =",trainDf.isnull().sum().sum())
 
 #mereduksi outlier
 #cek apakah ada outlier pada dataset, dengan memvisualisasikan mengunakan boxplot
 plt.figure()
-plt.subplot(1,3,1)
+plt.subplot(2,3,1)
 plt.boxplot(trainDf['Premi'])
 plt.title('Premi')
 
-plt.subplot(1,3,2)
+plt.subplot(2,3,2)
 plt.boxplot(trainDf['Kanal_Penjualan'])
 plt.title('Kanal_Penjualan')
 
-plt.subplot(1,3,3)
+plt.subplot(2,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
+
+plt.subplot(2,3,4)
+plt.boxplot(trainDf['Umur'])
+plt.title('Umur')
+
+plt.subplot(2,3,5)
+plt.boxplot(trainDf['Kode_Daerah'])
+plt.title('Kode_Daerah')
 
 plt.show()
 #jika terdapat outlier maka harus direduksi
@@ -147,17 +155,26 @@ BatasA = Quartile3p + (1.5 * interquartile)
 trainDf = trainDf[~((trainDf['Premi'] < BatasB) | (trainDf['Premi'] > BatasA))]
 
 plt.figure()
-plt.subplot(1,3,1)
+plt.figure()
+plt.subplot(2,3,1)
 plt.boxplot(trainDf['Premi'])
 plt.title('Premi')
 
-plt.subplot(1,3,2)
+plt.subplot(2,3,2)
 plt.boxplot(trainDf['Kanal_Penjualan'])
 plt.title('Kanal_Penjualan')
 
-plt.subplot(1,3,3)
+plt.subplot(2,3,3)
 plt.boxplot(trainDf['Lama_Berlangganan'])
 plt.title('Lama_Berlangganan')
+
+plt.subplot(2,3,4)
+plt.boxplot(trainDf['Umur'])
+plt.title('Umur')
+
+plt.subplot(2,3,5)
+plt.boxplot(trainDf['Kode_Daerah'])
+plt.title('Kode_Daerah')
 
 plt.show()
 
