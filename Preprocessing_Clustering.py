@@ -7,8 +7,31 @@ import seaborn as sb
 
 #import csv file 
 trainDf = pd.read_csv('kendaraan_train.csv')
-print("dataset sebelum drop")
+
+# #Eksplorasi Data 
+# #menampilkan sample 5 baris data dari keseluruhan data
 # print(trainDf.sample(5))
+# print("")
+# #melihat type data tiap kolom
+# print(trainDf.dtypes)
+# print("")
+# #melihat jumlah data keseluruhan
+# print("Total Data Keseluruhan = ",len(trainDf))
+# print("")
+# #melihat jumlah data duplikasi
+# trainDf.drop(['id'], axis=1, inplace=True)
+# trainDf.drop(['Tertarik'], axis=1, inplace=True)
+# cleanDuplicates= trainDf.drop_duplicates()
+# print("Total Data Duplikasi = ",len(trainDf)- len(cleanDuplicates))
+# print("")
+# #melihat jumlah data kosong
+# print("Total Data Kosong = ",trainDf.isnull().sum().sum())
+# print("")
+
+
+
+print("dataset sebelum drop")
+print(trainDf.sample(5))
 print("")
 #terlihat dari 5 sample bahwa kolom id tidak diperlukan, sehingga bisa di drop
 trainDf.drop(['id'], axis=1, inplace=True)
@@ -16,16 +39,16 @@ trainDf.drop(['id'], axis=1, inplace=True)
 trainDf.drop(['Tertarik'], axis=1, inplace=True)
 #cek dataset apakah id dan Tertarik sudah terdrop atau belum
 print("dataset setelah drop")
-# print(trainDf.sample(5))
+print(trainDf.sample(5))
 
 #cek apakah ada data yang sama atau duplikasi
-dataDuplikasi = list(trainDf.duplicated())
-print("Total data duplikasi : ", dataDuplikasi.count(True))
+cleanDuplicates= trainDf.drop_duplicates()
+print("Total data duplikasi : ", len(trainDf)- len(cleanDuplicates))
 #drop jika ada
 trainDf.drop_duplicates(inplace=True)
 #cek kembali apakah data sudah aman dari duplikasi
-dataDuplikasi = list(trainDf.duplicated())
-print("Total data duplikasi : ", dataDuplikasi.count(True))
+cleanDuplicates= trainDf.drop_duplicates()
+print("Total data duplikasi : ", len(trainDf)- len(cleanDuplicates))
 
 #ubah data categorical dengan angka (categorical encoding)
 #pertama cek data type tiap kolom, jika object maka itu adalah categorical
@@ -40,15 +63,14 @@ def labelEncode(dataFrame):
 print("")
 labelEncode(trainDf)
 #cek dataset apakah data categorical sudah berganti atau belum
-# print(trainDf.sample(5))
+print(trainDf.sample(5))
 
 #Mengatasi data kosong / missing value
 #pertama cek apakah ada data kosong atau tidak
-print(trainDf.isna().sum())
+print(trainDf.isnull().sum().sum())
 #jika ada data kosong maka kita isi dengan mean/median (ditentukan oleh nilai skewness)
 #untuk menentukan kita mengisinya dengan median atau mean perlu dilihat terlebih dahulu bentuk distplot nya
 #jika penyebarannya merata maka bisa menggunakan mean, sendangkan jika tidak merata maka bisa memakai median
-# print(trainDf.skew(axis=0, skipna= True))
 plt.subplot(2,5,1)
 sb.distplot(trainDf['SIM'])
 plt.title('SIM')
@@ -88,14 +110,14 @@ plt.title('Sudah_Asuransi')
 plt.subplot(2,5,10)
 sb.distplot(trainDf[['Umur_Kendaraan']])
 plt.title('Umur_Kendaraan')
-plt.show()
+# plt.show()
 #data kosong pada sim diisi dengan median karena penyebaran datanya condong ke kanan atau left-skewed
 trainDf['SIM'] = trainDf['SIM'].fillna(trainDf['SIM'].median())
 trainDf['Premi'] = trainDf['Premi'].fillna(trainDf['Premi'].median())
 #sisa data nya diisi mean karena berada di range -2 s/d 2 (untuk skewness kolom tertarik diabaikan karena tidak terdapat data kosong)
 trainDf = trainDf.fillna(trainDf.mean())
 #cek kembali apakah data kosong masih ada atau tidak
-print(trainDf.isna().sum())
+print(trainDf.isnull().sum().sum())
 
 #mereduksi outlier
 #cek apakah ada outlier pada dataset, dengan memvisualisasikan mengunakan boxplot
@@ -156,4 +178,4 @@ trainDf[['Sudah_Asuransi']] = scale.fit_transform(trainDf[['Sudah_Asuransi']].va
 trainDf[['Umur_Kendaraan']] = scale.fit_transform(trainDf[['Umur_Kendaraan']].values)
 print(trainDf.head())
 
-trainDf.to_csv('kendaraan_train_cleanforclustering.csv')
+trainDf.to_csv('kendaraan_train_cleanforclustering.csv', index=False)
